@@ -1,6 +1,9 @@
 package com.api.exerciciochamada.controllers;
 
 import com.api.exerciciochamada.dto.AlunoDto;
+import com.api.exerciciochamada.exceptions.GenericControllerAdvice;
+import com.api.exerciciochamada.exceptions.IdAlunoException;
+import com.api.exerciciochamada.exceptions.NomeAlunoException;
 import com.api.exerciciochamada.models.Aluno;
 import com.api.exerciciochamada.services.ChamadaSevice;
 import org.springframework.beans.BeanUtils;
@@ -32,12 +35,12 @@ public class ChamadaController {
     }
 
     @GetMapping("/forid/{id}")
-    public ResponseEntity<Aluno> findById( @PathVariable Integer id ) {
+    public ResponseEntity<Object> findById( @PathVariable Integer id ) throws IdAlunoException {
         return ResponseEntity.status(HttpStatus.OK).body(chamadaSevice.findById(id));
     }
 
     @GetMapping("/forname")
-    public ResponseEntity<List<Aluno>> forName( @RequestParam String name ) {
+    public ResponseEntity<List<Aluno>> forName( @RequestParam String name ) throws NomeAlunoException {
         return ResponseEntity.status(HttpStatus.OK).body(chamadaSevice.findByName(name));
     }
 
